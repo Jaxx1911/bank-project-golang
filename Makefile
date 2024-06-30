@@ -6,4 +6,11 @@ createdb:
 dropdb:
 	docker exec -it postgres dropdb bank-project-golang
 
-.PHONY: postgres createdb dropdb
+migrateup:
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/bank-project-golang?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/bank-project-golang?sslmode=disable" -verbose down
+
+
+.PHONY: postgres createdb dropdb migrateup migratedown
